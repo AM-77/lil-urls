@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Loader () {
   return (
-    <div className="loader-container">
+    (window.location.pathname !== "/") ? <div className="loader-container">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
         <g transform="translate(0, 512) scale(0.1, -0.1)" fill="#119955" stroke="none">
           <path d="M239 3601 l-24 -19 0 -1022 0 -1022 24 -19 c22 -18 53 -19 970 -19
@@ -24,6 +24,8 @@ export default function Loader () {
         250 0 5 79 117 177 250 l176 240 501 -2 501 -3 0 -485z"/>
         </g>
       </svg>
+      <h2>Redirecting ...</h2>
     </div>
+    : <React.Fragment></React.Fragment>
   )
 }
