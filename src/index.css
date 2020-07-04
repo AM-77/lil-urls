@@ -1,13 +1,243 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --light: #e8f0fe;
+  --dark: #212121;
+  --main: #119955;
+  --red: #cf3942;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  background: var(--light);
+  font-family: "Roboto mono", monospace, sans-serif;
+}
+
+#root {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+}
+
+.header .logo {
+  width: 40%;
+  max-width: 200px;
+
+}
+
+.header h2 {
+  font-size: 37px
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  width: 100%;
+  padding-top: 30px;
+}
+
+.main .input-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+.main .input-form .input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  margin-top: 35px;
+  position: relative;
+  transition: all 250ms ease
+}
+
+.main .input-form .input:hover input,
+.main .input-form .input input:focus {
+  border: 2px solid var(--main)
+}
+
+.main .input-form .input:hover label {
+  color: var(--main)
+}
+
+.main .input-form .input label {
+  position: absolute;
+  top: -10px;
+  background: var(--light);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 0 5px;
+}
+
+.main .input-form .input label span {
+  font-size: 10px;
+}
+
+.main .input-form .input input {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  background: var(--light);
+  border: 2px solid var(--dark);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Roboto mono", monospace, sans-serif;
+}
+
+.main .input-form button {
+  height: 40px;
+  background: transparent;
+  border: 2px solid var(--dark);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Roboto mono", monospace, sans-serif;
+  padding: 0 15px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: all 250ms ease;
+}
+
+.main .input-form button:hover {
+  border: 2px solid var(--main);
+  color: var(--main)
+}
+
+.footer {
+  text-align: center;
+  padding: 20px 10%;
+}
+
+.footer p {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.footer p span {
+  color: var(--main)
+}
+
+.footer p a {
+  text-decoration: underline;
+  color: var(--main)
+}
+
+.loader-container svg {
+  width: 150px;
+  height: 80px;
+
+  animation: beat 800ms ease infinite forwards running;
+}
+
+@keyframes beat {
+
+  0%,
+  100% {
+    transform: scale(1)
+  }
+
+  50% {
+    transform: scale(1.25)
+  }
+}
+
+.error-container,
+.link-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+}
+
+.link-container .title {
+  font-weight: 700;
+  font-size: 11px;
+  background: var(--light);
+  color: var(--main);
+  position: absolute;
+  top: 27px;
+  padding: 0 5px;
+  z-index: 2;
+}
+
+.error-container .error,
+.link-container .link {
+  display: flex;
+  border: 2px solid var(--main);
+  padding: 10px;
+  width: 90%;
+  margin-top: 35px;
+  position: relative;
+  transition: all 250ms ease;
+  font-weight: 700;
+  font-size: 12px;
+  padding-right: 45px;
+}
+
+.error-container .error {
+  display: inline-block;
+  border: 2px solid var(--red);
+  text-align: center;
+  padding-right: 10px;
+  color: var(--red)
+}
+
+.redirect-error {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.redirect-error p{
+  font-size: 15px;
+  font-weight: 700;
+  border: 2px solid var(--red);
+  padding: 10px 20px;
+  color: var(--red);;
 }
