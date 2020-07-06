@@ -1,11 +1,13 @@
 import React, { useState, ReactElement, FormEvent } from 'react'
 import axios from 'axios'
+import copy from 'copy-to-clipboard'
 
 export default function Main(): ReactElement {
 
   const [link, setLink] = useState("")
   const [data, setData] = useState({ url: "", lil: ""})
   const [error, setError] = useState("")
+  const [copied, setCopied] = useState(false)
 
   const isValidLil = (lil: string) => /[a-zA-Z0-9_-]{5}/.test(lil)
 
@@ -20,25 +22,31 @@ export default function Main(): ReactElement {
 
     if (data.lil.length !== 0 && !isValidLil(data.lil)) {
       setError("Invalid custom lil.")
-      setTimeout(()=> { setError("") }, 2000)
+      setTimeout(()=> { setError("") }, 3000)
     } else if (data.url === "") {
       setError("Invalid url.")
-      setTimeout(()=> { setError("") }, 2000)
+      setTimeout(()=> { setError("") }, 3000)
     } else {
       axios.post("https://lil-urls.herokuapp.com", data)
       .then(res => {
         const { code, lil, message } = res.data
         if(code === 405) {
           setError(message)
-          setTimeout(()=> { setError("") }, 2000)
+          setTimeout(()=> { setError("") }, 3000)
         }
         if(code === 200) setLink(`${window.location.origin}/${lil}`)
       })
       .catch(err => {
         setError("A serevr error, please try again.")
-        setTimeout(()=> { setError("") }, 2000)
+        setTimeout(()=> { setError("") }, 3000)
       })
     }  
+  }
+
+  const onCopy = () => {
+    copy(link)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 3000)
   }
 
   return (
@@ -54,9 +62,10 @@ export default function Main(): ReactElement {
         (link.length > 0) && 
           <div className="link-container">
             <p className="title">Your link is ready</p>
-            <div className="link">
+            <div onClick={onCopy} className="link">
               <p>{link}</p>
             </div>
+            <p className="copy">{copied ? 'copied' : 'click to copy' } to clipboard</p>
           </div> 
       }
 
