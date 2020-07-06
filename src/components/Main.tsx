@@ -8,6 +8,7 @@ export default function Main(): ReactElement {
   const [data, setData] = useState({ url: "", lil: ""})
   const [error, setError] = useState("")
   const [copied, setCopied] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const isValidLil = (lil: string) => /[a-zA-Z0-9_-]{5}/.test(lil)
 
@@ -19,6 +20,7 @@ export default function Main(): ReactElement {
 
   const getLilURL = (e: FormEvent) => {
     e.preventDefault()
+    setLink("")
 
     if (data.lil.length !== 0 && !isValidLil(data.lil)) {
       setError("Invalid custom lil.")
@@ -27,6 +29,7 @@ export default function Main(): ReactElement {
       setError("Invalid url.")
       setTimeout(()=> { setError("") }, 3000)
     } else {
+      setLoading(true)
       axios.post("https://lil-urls.herokuapp.com", data)
       .then(res => {
         const { code, lil, message } = res.data
@@ -40,6 +43,7 @@ export default function Main(): ReactElement {
         setError("A serevr error, please try again.")
         setTimeout(()=> { setError("") }, 3000)
       })
+      .finally(() => setLoading(false))
     }  
   }
 
@@ -52,14 +56,14 @@ export default function Main(): ReactElement {
   return (
     <div className="main">
       { 
-        (error.length > 0) && 
+        (!loading && error.length > 0) && 
           <div className="error-container">
             <p className="error">{error}</p>
           </div> 
       }
 
       { 
-        (link.length > 0) && 
+        (!loading && link.length > 0) && 
           <div className="link-container">
             <p className="title">Your link is ready</p>
             <div onClick={onCopy} className="link">
@@ -67,6 +71,11 @@ export default function Main(): ReactElement {
             </div>
             <p className="copy">{copied ? 'copied' : 'click to copy' } to clipboard</p>
           </div> 
+      }
+      { loading &&
+      <div className="loading-container">
+        <div className="loading-link"><div></div><div></div><div></div><div></div></div>
+      </div>
       }
 
       <form className="input-form">
